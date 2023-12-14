@@ -1,0 +1,42 @@
+---
+title: "webr-demo"
+engine: knitr
+author: 'Jeffrey M. Perkel'
+date: 'today'
+format: 
+  html: 
+    self-contained: true 
+webr: 
+  packages: ['ggplot2', 'dplyr']
+filters: 
+  - webr
+---
+
+## WebR
+
+This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, allows users to create Quarto documents with code that runs at runtime instead of during document rendering. 
+
+```{webr-r}
+p <- mtcars |> 
+   ggplot(aes(x = wt, y = mpg, color = factor(cyl))) + 
+   geom_point(shape = 21)
+
+p
+```
+
+We can modify this base graph (stored as the variable `p`), for instance by changing the background from grey to white. 
+```{webr-r}
+p + theme_minimal()
+```
+
+Now, replace the text in the previous cell to read: 
+
+```{r}
+#| eval: false
+
+p + 
+  labs(title = "Title", x = "Weight", y = "Miles-per-gallon") +
+  theme_minimal()
+```
+
+(You can click the clipboard icon at the upper-right of the cell above to copy its text) and click `Run Code` again.
