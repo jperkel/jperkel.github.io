@@ -40,3 +40,23 @@ p +
 ```
 
 (You can click the clipboard icon at the upper-right of the cell above to copy its text) and click `Run Code` again.
+
+## Graph of a line
+
+Here we'll graph the line, `y = mx + b`. Adjust the values of `b` and `m` below and click `Run Code`.
+
+```{webr}
+b <- 0 # y-intercept
+m <- 1 # slope
+```
+
+Now, click `Run Code` here to graph the line. 
+
+```{webr}
+my_line <- function(x) { (m * x) + b }
+p <- ggplot(data.frame(x = c(1, 50)), aes(x = x)) +
+  stat_function(fun = my_line) + 
+  theme_minimal()
+p
+```
+
