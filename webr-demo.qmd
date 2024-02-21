@@ -14,50 +14,71 @@ filters:
 
 ## WebR
 
-This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, allows users to create Quarto documents with code that runs at runtime instead of during document rendering. 
+This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, users can create Quarto documents with code that runs at runtime instead of during document rendering. 
+
+Among other things, this allows researchers to create tools to explore data. Here we'll graph the line $$y = mx + b$$ By changing the slope and y-intercept, we can illustrate how the line changes. 
 
 ```{webr-r}
-p <- mtcars |> 
-   ggplot(aes(x = wt, y = mpg, color = factor(cyl))) + 
-   geom_point(shape = 21)
+#| context: setup
 
-p
+# output the equation of a line
+# this cell is hidden in the output document, but the code does run
+get_equation <- function(m, x, b) {
+  # get equation for new line
+  if(m == 0) { # equation is y = b
+    xterm <- '' 
+    op <- '' 
+    bterm <- b
+  } else if(m == 1) { 
+    xterm <- 'x' 
+    if (b == 0) { # equation is y = x
+      op <- ''
+      bterm <- ''
+    } else { # equation is y = x +/- b
+      op <- ifelse(b > 0, ' + ', ' - ')
+      bterm <- abs(b)
+    }
+  } else { 
+    xterm <- paste0(m, 'x')
+    if (b != 0) { # equation is y = mx +/- b
+      op <- ifelse(b > 0, ' + ', ' - ')
+      bterm <- abs(b)
+    } else { # equation is y = mx
+      op <- ''
+      bterm <- ''
+    }
+  }
+  paste0("y = ", xterm, op, bterm)
+}
 ```
 
-We can modify this base graph (stored as the variable `p`), for instance by changing the background from grey to white. 
+Click the `Run Code` button to draw the line `y = x`. Then adjust the values of `b` and `m` below and click `Run Code` again to see how the line changes.
+
 ```{webr-r}
-p + theme_minimal()
-```
-
-Now, replace the text in the previous cell to read: 
-
-```{r}
-#| eval: false
-
-p + 
-  labs(title = "Title", x = "Weight", y = "Miles-per-gallon") +
-  theme_minimal()
-```
-
-(You can click the clipboard icon at the upper-right of the cell above to copy its text) and click `Run Code` again.
-
-## Graph of a line
-
-Here we'll graph the line, `y = mx + b`. Adjust the values of `b` and `m` below and click `Run Code`.
-
-```{webr}
+##### ADJUST VALUES OF b AND m TO CHANGE THE LINE #####
 b <- 0 # y-intercept
 m <- 1 # slope
-print(paste0("Slope = ", m, "; y-intercept = ", b, "."))
-```
+#######################################################
 
-Now, click `Run Code` here to graph the line. (Note that the y-axis range changes.)
+# store the original line so we can show both on the graph
+original_line_data <- data.frame(x = -50:50, y = -50:50) 
+# function for a line
+new_line <- function(x) { (m * x) + b }
 
-```{webr}
-my_line <- function(x) { (m * x) + b }
 p <- ggplot(data.frame(x = -50:50), aes(x = x)) +
-  geom_function(fun = my_line, colour = "red") +
+  geom_function(fun = new_line, colour = "red") +
+  geom_line(data = original_line_data, aes(x = x, y = y), color = "black") +
   theme_minimal()
+
+# get the y-axis limits so we can position annotations on the graph
+# from https://stackoverflow.com/a/57427773
+ymin <- ggplot_build(p)$layout$panel_params[[1]]$y.range[1]
+ymax <- ggplot_build(p)$layout$panel_params[[1]]$y.range[2]
+
+p <- p +
+  annotate("text", label = "y = x", colour = "black", size = 4, 
+           x = 37, y = ymax - (0.75 * (ymax - ymin))) +
+  annotate("text", label = get_equation(m, x, b), colour = "red", size = 4, 
+           x = 37, y = ymax - (0.8 * (ymax - ymin))) 
 p
 ```
-
