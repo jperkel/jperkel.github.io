@@ -51,12 +51,12 @@ m <- 1 # slope
 print(paste0("Slope = ", m, "; y-intercept = ", b, "."))
 ```
 
-Now, click `Run Code` here to graph the line. 
+Now, click `Run Code` here to graph the line. (Note that the y-axis range changes.)
 
 ```{webr}
 my_line <- function(x) { (m * x) + b }
-p <- ggplot(data.frame(x = c(1, 50)), aes(x = x)) +
-  stat_function(fun = my_line) + 
+p <- ggplot(data.frame(x = -50:50), aes(x = x)) +
+  geom_function(fun = my_line, colour = "red") +
   theme_minimal()
 p
 ```
