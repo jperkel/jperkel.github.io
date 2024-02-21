@@ -16,6 +16,8 @@ filters:
 
 This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, users can create Quarto documents with code that runs at runtime instead of during document rendering. 
 
+This code runs entirely in the browser -- no R interpreter is needed, because webR runs the R interpreter *in the browser*, using [WebAssembly](https://webassembly.org/). 
+
 Among other things, this allows researchers to create tools to explore data. Here we'll graph the line $$y = mx + b$$ By changing the slope and y-intercept, we can illustrate how the line changes. 
 
 ```{webr-r}
@@ -52,22 +54,25 @@ get_equation <- function(m, x, b) {
 }
 ```
 
-Click the `Run Code` button to draw the line `y = x`. Then adjust the values of `b` and `m` below and click `Run Code` again to see how the line changes.
+1. Click the `Run Code` button to draw the line `y = x`. 
+2. Adjust the values of `b` and `m` on lines 3 and 4 below to specify a new line. 
+3. Click `Run Code` to see how the line changes.
 
 ```{webr-r}
+#######################################################
 ##### ADJUST VALUES OF b AND m TO CHANGE THE LINE #####
 b <- 0 # y-intercept
 m <- 1 # slope
 #######################################################
 
 # store the original line so we can show both on the graph
-original_line_data <- data.frame(x = -50:50, y = -50:50) 
+original_line <- data.frame(x = -50:50, y = -50:50) 
 # function for a line
 new_line <- function(x) { (m * x) + b }
 
 p <- ggplot(data.frame(x = -50:50), aes(x = x)) +
   geom_function(fun = new_line, colour = "red") +
-  geom_line(data = original_line_data, aes(x = x, y = y), color = "black") +
+  geom_line(data = original_line, aes(x = x, y = y), color = "black") +
   theme_minimal()
 
 # get the y-axis limits so we can position annotations on the graph
