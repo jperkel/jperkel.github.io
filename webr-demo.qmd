@@ -48,6 +48,7 @@ Here we'll graph the line, `y = mx + b`. Adjust the values of `b` and `m` below 
 ```{webr}
 b <- 0 # y-intercept
 m <- 1 # slope
+print(paste0("Slope = ", m, "; y-intercept = ", b, "."))
 ```
 
 Now, click `Run Code` here to graph the line. 
