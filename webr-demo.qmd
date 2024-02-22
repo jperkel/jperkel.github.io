@@ -25,31 +25,30 @@ Among other things, this allows researchers to create tools to explore data. Her
 
 # output the equation of a line
 # this cell is hidden in the output document, but the code does run
-get_equation <- function(m, x, b) {
+get_equation <- function(m, b) {
   # get equation for new line
-  if(m == 0) { # equation is y = b
-    xterm <- '' 
-    op <- '' 
+  
+  xterm <- paste0(m, 'x')
+  bterm <- abs(b)
+  # op, as in operator
+  op <- ifelse(b > 0, ' + ', 
+               ifelse(b < 0, ' - ', ''))
+  
+  if (m == 0) { # y = b
+    xterm <- ''
+    op <- ''
     bterm <- b
-  } else if(m == 1) { 
-    xterm <- 'x' 
-    if (b == 0) { # equation is y = x
+  } else if (m == 1) { # y = x +/- b 
+    xterm <- 'x'
+    if (b == 0) { # y = x
       op <- ''
       bterm <- ''
-    } else { # equation is y = x +/- b
-      op <- ifelse(b > 0, ' + ', ' - ')
-      bterm <- abs(b)
-    }
-  } else { 
-    xterm <- paste0(m, 'x')
-    if (b != 0) { # equation is y = mx +/- b
-      op <- ifelse(b > 0, ' + ', ' - ')
-      bterm <- abs(b)
-    } else { # equation is y = mx
-      op <- ''
-      bterm <- ''
-    }
+    } 
+  } else if (b == 0) { # y = mx
+    bterm <- ''
+    op <- ''
   }
+  
   paste0("y = ", xterm, op, bterm)
 }
 ```
@@ -59,13 +58,14 @@ get_equation <- function(m, x, b) {
 3. Click `Run Code` to see how the line changes.
 
 ```{webr-r}
+
 #######################################################
 ##### ADJUST VALUES OF b AND m TO CHANGE THE LINE #####
 b <- 0 # y-intercept
 m <- 1 # slope
 #######################################################
 
-# store the original line so we can show both on the graph
+# data for the original line (y = x) 
 original_line <- data.frame(x = -50:50, y = -50:50) 
 # function for a line
 new_line <- function(x) { (m * x) + b }
@@ -83,7 +83,7 @@ ymax <- ggplot_build(p)$layout$panel_params[[1]]$y.range[2]
 p <- p +
   annotate("text", label = "y = x", colour = "black", size = 4, 
            x = 37, y = ymax - (0.75 * (ymax - ymin))) +
-  annotate("text", label = get_equation(m, x, b), colour = "red", size = 4, 
+  annotate("text", label = get_equation(m, b), colour = "red", size = 4, 
            x = 37, y = ymax - (0.8 * (ymax - ymin))) 
 p
 ```
