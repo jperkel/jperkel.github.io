@@ -38,8 +38,8 @@ get_equation <- function(m, b) {
     xterm <- ''
     op <- ''
     bterm <- b
-  } else if (m == 1) { # y = x +/- b 
-    xterm <- 'x'
+  } else if (m == 1 | m == -1) { # y = x +/- b 
+    xterm <- ifelse(m == 1, 'x', '-x')
     if (b == 0) { # y = x
       op <- ''
       bterm <- ''
