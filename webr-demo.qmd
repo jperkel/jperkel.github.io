@@ -1,5 +1,5 @@
 ---
-title: "webr-demo"
+title: "webR/WebAssembly Demo"
 engine: knitr
 author: 'Jeffrey M. Perkel'
 date: 'today'
@@ -12,13 +12,23 @@ filters:
   - webr
 ---
 
-## WebR
+## webR and WebAssembly
 
-This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, users can create Quarto documents with code that runs at runtime instead of during document rendering. 
+This document demonstrates the [webR](https://docs.r-wasm.org/webr/latest/) package for the #rstats community. Using it, in conjunction with the [quarto-webr](https://quarto-webr.thecoatlessprofessor.com/) Quarto extension, users can create Quarto documents that allow readers to explore their code and data. 
 
-This code runs entirely in the browser -- no R interpreter is needed, because webR runs the R interpreter *in the browser*, using [WebAssembly](https://webassembly.org/). 
+In a traditional [executable manuscript](https://www.nature.com/articles/d41586-022-00563-z), results are calculated and figures generated when the document is compiled. This promotes accuracy and reproducibility, but the resulting document is static -- readers cannot, for instance, plug in different numbers to test a model's robustness.  
 
-Among other things, this allows researchers to create tools to explore data. Here we'll graph the line $$y = mx + b$$ By changing the slope and y-intercept, we can illustrate how the line changes. 
+Using webR and quarto-webr, however, you can create web pages in which the code is executed on demand, in the web browser. Among other things, this allows researchers to create tools so others may explore their data. 
+
+Key to these tools is [WebAssembly](https://webassembly.org/), a system for executing code written in such languages as C, C++ and Rust, in the browser. When a WebAssembly-enabled page is accessed, the code is downloaded and executed in a sandboxed virtual machine inside the browser itself -- no installation required. 
+
+webR is a port of the R interpreter to WebAssembly, and quarto-webr is an extension to the Quarto system that allows users to embed webR code cells into their Quarto documents. Together, they allow us to create a document that allows users to modify and execute R code on demand. 
+
+## Graphing a line 
+
+We'll demonstrate these possibilities using the equation for a line, $$y = mx + b$$ By changing the values for slope (`m`) and y-intercept (`b`), we can see how the line changes. 
+
+Click [here](https://github.com/jperkel/jperkel.github.io) for the GitHub repository that contains the code for this document. 
 
 ```{webr-r}
 #| context: setup
@@ -87,3 +97,10 @@ p <- p +
            x = 37, y = ymax - (0.8 * (ymax - ymin))) 
 p
 ```
+
+In the cell below, feel free to explore. For instance, you might give our plot a title by typing `p + labs(title = "Graph of a line")` and clicking `Run Code`.
+
+```{webr}
+
+```
+
