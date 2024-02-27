@@ -28,8 +28,6 @@ webR is a port of the R interpreter to WebAssembly, and quarto-webr is an extens
 
 We'll demonstrate these possibilities using the equation for a line, $$y = mx + b$$ By changing the values for slope (`m`) and y-intercept (`b`), we can see how the line changes. 
 
-Click [here](https://github.com/jperkel/jperkel.github.io) for the GitHub repository that contains the code for this document. 
-
 ```{webr-r}
 #| context: setup
 
@@ -98,9 +96,14 @@ p <- p +
 p
 ```
 
+## Explore
+
 In the cell below, feel free to explore. For instance, you might give our plot a title by typing `p + labs(title = "Graph of a line")` and clicking `Run Code`.
 
 ```{webr}
 
 ```
 
+## GitHub repo
+
+Click [here](https://github.com/jperkel/jperkel.github.io) for the GitHub repository that contains the code for this document. 
