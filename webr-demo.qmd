@@ -62,7 +62,7 @@ get_equation <- function(m, b) {
 ```
 
 1. Click the `Run Code` button to draw the line `y = x`. 
-2. Adjust the values of `b` and `m` on lines 3 and 4 below to specify a new line. 
+2. Adjust the values of `b` and `m` below to specify a new line. 
 3. Click `Run Code` to see how the line changes.
 
 ```{webr-r}
