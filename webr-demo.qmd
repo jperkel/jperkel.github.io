@@ -98,7 +98,17 @@ p
 
 ## Explore
 
-In the cell below, feel free to explore. For instance, you might give our plot a title by typing `p + labs(title = "Graph of a line")` and clicking `Run Code`.
+In the cell below, feel free to explore. For instance, you might give our plot from the previous cell (stored in the object `p`) a title. Type `p + labs(title = "Graph of a line")` and click `Run Code`.
+
+Or, feel free to explore the standard automotive dataset `mtcars`. Take a peek at the dataset with `glimpse(mtcars)`. And view the relationship between automobile weight and fuel efficiency with: 
+
+```
+mtcars |> 
+  mutate(cyl = factor(cyl)) |> 
+  ggplot(aes(x = mpg, y = wt, color = cyl)) + 
+  geom_point() + 
+  theme_minimal()
+```
 
 ```{webr}
 
