@@ -3,9 +3,7 @@ title: "webR/WebAssembly Demo"
 engine: knitr
 author: 'Jeffrey M. Perkel'
 date: 'today'
-format: 
-  html: 
-    self-contained: true 
+format: html
 webr: 
   packages: ['ggplot2', 'dplyr']
 filters: 
@@ -100,7 +98,7 @@ p
 
 In the cell below, feel free to explore. For instance, you might give our plot from the previous cell (stored in the object `p`) a title. Type `p + labs(title = "Graph of a line")` and click `Run Code`.
 
-Or, feel free to explore the standard automotive dataset `[mtcars](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/mtcars)`. Take a peek at the dataset with `glimpse(mtcars)`. And view the relationship between automobile weight and fuel efficiency with: 
+Or, feel free to explore the standard automotive dataset [`mtcars`](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/mtcars). Take a peek at the dataset with `glimpse(mtcars)`. And view the relationship between automobile weight and fuel efficiency with: 
 
 ```
 mtcars |> 
@@ -110,7 +108,7 @@ mtcars |>
   theme_minimal()
 ```
 
-```{webr}
+```{webr-r}
 
 ```
 
