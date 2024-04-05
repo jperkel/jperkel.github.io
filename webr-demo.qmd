@@ -3,7 +3,17 @@ title: "webR/WebAssembly Demo"
 engine: knitr
 author: 'Jeffrey M. Perkel'
 date: 'today'
-format: html
+format: 
+  html:
+    toc: true
+    toc-title: "webR/WebAssembly Demo"
+    code-links:
+      - text: GitHub
+        icon: github
+        href: https://github.com/jperkel/jperkel.github.io
+    theme: 
+      light: cosmo
+      dark: darkly
 webr: 
   packages: ['ggplot2', 'dplyr']
 filters: 
